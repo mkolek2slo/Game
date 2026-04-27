@@ -9,7 +9,6 @@ move
 collision 
 draw
 
-
 """
 
 class Player:

@@ -17,7 +17,7 @@ class Human:
         self.img = img
 
     def draw(self, screen):
-        screen.blit(self.img, (9,5))
+       screen.blit(self.img, (self.x * self.w, self.y * self.h))
 
     # def display(self):
             # \r wraca na początek aktualnej linii

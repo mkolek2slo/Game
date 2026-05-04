@@ -112,7 +112,7 @@ for r in range(row):
 def drawGrid(grid: list[list]):
     index = 0   #num of obsticles
     for r in range(row):
-        for c  in range(col):
+         for c  in range(col):
             if grid[r][c] == 0: 
                 # py.draw.rect(screen, "#000000", (cell_w*c, cell_h*r, cell_w, cell_h))
                 obstacleList[index].draw(screen)

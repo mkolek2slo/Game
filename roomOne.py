@@ -52,7 +52,7 @@ py.init()
 screen = py.display.set_mode((screen_w + panel_w, screen_h))
 py.display.set_caption("Generating random grid")
 
-p1 = Player(5, 5, 60, 60, char)       
+p1 = Player(0, 0, 60, 60, char)       
 p2 = Human(8, 4, cell_w, cell_h, queen)
 # Player.speedX = cell_w
 # Player.speedY = cell_h
@@ -68,14 +68,29 @@ def drawPanel():
     textSurface = font.render(f"BACKPACK", True,"#ffffff")
     screen.blit(textSurface, (screen_w + 20, 40))
 
-
-
 font = py.font.SysFont('Arial', 24)
-active_message = None  
-info_tile = (2, 2)     
-talking_to_queen = False 
 
-            
+active_message = None
+messages = [
+    "Queen: Welcome, traveler.",
+    "Our kingdom is in danger.",
+    "You must begin your journey."
+]
+
+message_index = 0
+
+active_message = None
+info_tile = (2, 2)
+talking_to_queen = False
+
+messages = [
+    "Queen: Welcome, traveler.",
+    "Our kingdom is in danger.",
+    "You must begin your journey."
+]
+
+message_index = 0
+
 
 run = True 
 while run:
@@ -85,21 +100,27 @@ while run:
 
         if event.type == py.KEYDOWN:
 
-            # close message
-            if event.key == py.K_SPACE and active_message:
-                active_message = None
-                talking_to_queen = False
+     # SPACE = dialogue control
+            if event.key == py.K_SPACE:
 
-            # movement
-            # elif not active_message:
-            #     if event.key in [py.K_UP, py.K_DOWN, py.K_LEFT, py.K_RIGHT]:
-            #         p1.move(screen, grid, event)
+                # START dialogue (only if near queen)
+                if active_message is None:
+                    if is_next_to(p1, (p2.x, p2.y)):
+                        active_message = messages[0]
+                        message_index = 0
 
-            if event.key == py.K_SPACE and active_message:
-                active_message = None
-                talking_to_queen = False
+                # NEXT / CLOSE dialogue
+                else:
+                    message_index += 1
 
-            elif not active_message:
+                    if message_index < len(messages):
+                        active_message = messages[message_index]
+                    else:
+                        active_message = None
+                        message_index = 0
+
+            # MOVEMENT (only when no dialogue)
+            elif active_message is None:
 
                 next_x, next_y = p1.x, p1.y
 
@@ -112,35 +133,51 @@ while run:
                 elif event.key == py.K_RIGHT:
                     next_x += 1
 
-                # ❗ BLOCK QUEEN TILE HERE
-                if (next_x, next_y) != (p2.x, p2.y):
+                # stay inside grid
+                if 0 <= next_x < col and 0 <= next_y < row:
                     p1.x, p1.y = next_x, next_y
-    
+
+
     if is_next_to(p1, (p2.x, p2.y)) and not active_message:
-        active_message = "Queen: Welcome, traveler."
+        active_message = messages[0]
+        message_index = 0
         talking_to_queen = True
 
     clock.tick(10)              
     screen.blit(bg, (0,0))
     drawPanel()
-    p1.draw(screen)
-    p2.draw(screen)
+    screen.blit(char, (p1.x * cell_w, p1.y * cell_h))
+    screen.blit(queen, (p2.x * cell_w, p2.y * cell_h))
+    # p1.draw(screen)
+    # p2.draw(screen)
 
     if active_message:
-        overlay = py.Surface((400, 120))
+        # popup size
+        popup_w = 400
+        popup_h = 120
+
+        # center position
+        popup_x = (screen_w - popup_w) // 2
+        popup_y = (screen_h - popup_h) // 2
+
+        # popup background
+        overlay = py.Surface((popup_w, popup_h))
         overlay.fill((40, 40, 40))
 
-        text_surf = font.render(active_message, True, (255, 255, 255))
+        # border
+        py.draw.rect(overlay, (255,255,255), (0,0,popup_w,popup_h), 3)
 
-        screen.blit(overlay, (100, 350))
-        screen.blit(text_surf, (120, 390))
+        # text
+        text_surf = font.render(active_message, True, (255,255,255))
+
+        # draw everything
+        screen.blit(overlay, (popup_x, popup_y))
+        screen.blit(text_surf, (popup_x + 20, popup_y + 45))
 
     py.display.flip()
 py.quit()
 
-#Problems: the movement of p1 cannot enter the same row as queen, 
-# the window is nowhere to be found
-
+#PROBLEM : popup doesnt close
 
 
 

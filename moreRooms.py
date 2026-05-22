@@ -12,15 +12,33 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))            #???
 ROOM 1
 1. I want the window to pop up when player is next to queen 
 2. After the queens message is told, I want the player to have to choose one of the outfit choices by clicking a or b or c
-3. Each of the letters should change the image of the player to one linked to the letter ( so ex. outfit a would have a dress, outfit b pants etc.)
+3. Each of the letters should change the image of the player to one linked to the letter
+ ( so ex. outfit a would have a dress, outfit b pants etc.)
 4. After outfit is picked, I want the an envelope to be added to the backpack to symbolize the message from the queen  
 
 ROOM 2 
 1. character spawns in tall grass (the whole grid filled with separate grass images which the player can be seen behind)
-2. one of the positions there is a cat - if player is on a spot next to the cat, a window appears at the bottom saying : " pet the cat " with yes (press Y) or no (press N) at the bottom 
-    - if y pressed the cat meows, if n pressed the cat hisses 
+2. one of the positions there is a cat - if player is on a spot next to the cat, a window appears at the bottom saying : " pet the cat " 
+with yes (press Y) or no (press N) at the bottom 
+- if y pressed the cat meows, if n pressed the cat hisses 
 3. to get to a new room the player has to find an exit in the tall grass, the exit door appears after interaction with cat (both y or n)
 4. once player steps on the door, the scene changes to next room 
+
+ROOM 3: #UPDATE
+1. player spawns at the bottom, multiple trees around and a stream 
+2. when the player is on a spot next to a tree, the its image changes to one sitting to "rest", when player moves away from tree,
+the image changes back to a standing one (has to be programmed for all 3 outfit options)
+3. when player is next to stream, a small text appears saying " to drink press e ", if player chooses e, the image changes to one
+ of the player drinking and sound is played for 3 sec, then it changes back to normal (has to be programmed on all 3 outfits)
+4. after some time a fairy moves diagonally (left to right) through the screen (like flying), and leaves behind glitter
+ ( both fairy and glitter will be imagines) and once player steps on the last step the fairy was before flying out of the visible screen
+(so the tile most right) its teleported to the next room 
+
+ROOM 4: 
+1. this is a darker version of the forest 
+2. there should be little świetliki moving a around 
+3. there should be a cave somewhere, once player moves to close to it bats fly out 
+4. 
 
 PROBLEMS: 
 1. outfit 1 not working (can be fixed later)
@@ -43,7 +61,7 @@ grid = [[randint(0,4) for i in range(col)] for j in range(row)]      #??
 """
 SCHOOL
 """
-# sound = py.mixer.Sound("C:/Users/04Solec/PreDP2-MagdalenaK/Game/Creeper_death.oga")
+sound = py.mixer.Sound("C:/Users/04Solec/PreDP2-MagdalenaK/Game/Creeper_death.oga")
 
 char = py.image.load("C:/Users/04Solec/PreDP2-MagdalenaK/Game/charheart.svg.svg")
 char = py.transform.scale(char, (60, 60))
@@ -72,45 +90,46 @@ door_img = py.transform.scale(door_img, (60,60))
 grass_img = py.image.load( "C:/Users/04Solec/PreDP2-MagdalenaK/PygameProject/Game/grass.png" )
 grass_img = py.transform.scale(grass_img,(60,60))
 
-"""
-HOME 
+# """
+# HOME 
+# """
 
-# sound = py.mixer.Sound("C:/Users/04Solec/PreDP2-MagdalenaK/Game/Creeper_death.oga")
+# # sound = py.mixer.Sound("C:/Users/04Solec/PreDP2-MagdalenaK/Game/Creeper_death.oga")
 
-char = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/charheart.svg.svg")
-char = py.transform.scale(char, (60, 60))
+# char = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/charheart.svg.svg")
+# char = py.transform.scale(char, (60, 60))
 
-bg = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/white_bg.jpg")
-bg = py.transform.scale(bg, (screen_w, screen_h))
+# bg = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/white_bg.jpg")
+# bg = py.transform.scale(bg, (screen_w, screen_h))
 
-queen = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/Question-Mark-Fractal.svg")
-queen = py.transform.scale(queen, (60,60))
+# queen = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/Question-Mark-Fractal.svg")
+# queen = py.transform.scale(queen, (60,60))
 
-outfit_a = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/outfitone.svg")
-outfit_a = py.transform.scale(outfit_a, (60,60))
+# outfit_a = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/outfitone.svg")
+# outfit_a = py.transform.scale(outfit_a, (60,60))
 
-outfit_b = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/outfittwo.svg")
-outfit_b = py.transform.scale(outfit_b, (60,60))
+# outfit_b = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/outfittwo.svg")
+# outfit_b = py.transform.scale(outfit_b, (60,60))
 
-outfit_c = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/outfitthree.svg")
-outfit_c = py.transform.scale(outfit_c, (60,60))
+# outfit_c = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/outfitthree.svg")
+# outfit_c = py.transform.scale(outfit_c, (60,60))
 
-envelope = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/zero.svg")
-envelope = py.transform.scale(envelope, (40,40))
+# envelope = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/zero.svg")
+# envelope = py.transform.scale(envelope, (40,40))
 
-door_img = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/x.png")
-door_img = py.transform.scale(door_img, (60,60))
+# door_img = py.image.load("C:/Users/me/OneDrive/Obrazy/Dokumenty/python 2IB/x.png")
+# door_img = py.transform.scale(door_img, (60,60))
 
-grass_img = py.image.load(  )
-grass_img = py.transform.scale(grass_img,(60,60))
-"""
+# grass_img = py.image.load(  )
+# grass_img = py.transform.scale(grass_img,(60,60))
+
 
 
 current_skin = char                                                  #???
 
 clock  = py.time.Clock()                                             #clock object to control game speed (frames per sec)
 screen = py.display.set_mode((screen_w + panel_w, screen_h))         #creates game window and sets width and height
-py.display.set_caption("Generating random grid")                     #the window title NEEDS TO BE CHANGED 
+py.display.set_caption("TRAVELER GAME")                             #the window title NEEDS TO BE CHANGED 
 
 p1 = Player(0, 0, 60, 60, char)                                     #creates player object with starting position, player size and image                
 p2 = Human(8, 4, cell_w, cell_h, queen)                             #creates NPC with grid position, size and image 
@@ -120,10 +139,10 @@ def is_next_to(p1, target):                                         #function wh
 
 
 def drawPanel():                                                                                #function which draws inventory 
-    font = py.font.SysFont(None, 30)                                                            #font object for text (none = defoult font NEEDS TO BE CHANGED, 30 = font size)
-    py.draw.rect(screen, "#F891BB", (screen_w, 0, panel_w, screen_h))                           # draws rectangle on screen ( with coulour, rectangle position and size)
+    font = py.font.SysFont('Cambria', 30)                                                            #font object for text (none = defoult font NEEDS TO BE CHANGED, 30 = font size)
+    py.draw.rect(screen, "#422B10", (screen_w, 0, panel_w, screen_h))                           # draws rectangle on screen ( with coulour, rectangle position and size)
 
-    screen.blit(font.render("BACKPACK", True, "#ffffff"), (screen_w + 20, 40))                  # draws text onto the panel (text, smooth edges, colour)(position near to of side panel)
+    screen.blit(font.render("BACKPACK", True, "#ffffff"), (screen_w + 20, 40))   #UPDATE               # draws text onto the panel (text, smooth edges, colour)(position near to of side panel)
 
     if has_letter:                                                                              #checks if player have letter item??
         screen.blit(envelope, (screen_w + 70, 250))                                             # draws envelope (position)
@@ -134,14 +153,14 @@ def drawPanel():                                                                
 
         for i, opt in enumerate(options):                                                       #loops through options ( index numb, value )??
             if selected_outfit == i:                                                            #selected text is green     
-                color = (0,255,0)
+                color = ("#1D6B18")
             else:
-                color = (255,255,255)                                                           #not selected white 
+                color =("#E6D7C5")                                                           #not selected white 
             screen.blit(font.render(f"Outfit {opt}", True, color), (screen_w + 20, y))          #draws coloumn with outfit options 
             y += 40                                                                             #moves next option down by 40 pixels     
 
 
-font = py.font.SysFont('Arial', 24)             #object for font 
+font = py.font.SysFont('Cambria', 20)     #UPDATE        #object for font 
 
 game_state = "kingdom"                          #stores the current room of the game, starts in kingdom 
 
@@ -152,9 +171,13 @@ door_pos = (8, 8)                               #dorrs grid position
 active_message = None                           #dialogue variable
 
 messages = [                                    #list of dialogue items 
-    "Queen: Welcome, traveler.",
-    "Our kingdom is in danger.",
-    "You must begin your journey."
+    "Welcome, Traveler!",
+    "since the war has begun the path to the..",
+    "..city are blocked. I have a message for the",
+    "..King that requires instant delivery. ",
+    "The tales of yout bravery are know ",
+    " therefore I assign this task to you",
+    "You must begin Your journey now"
 ]
 
 message_index = 0                               #the message currently shown
@@ -314,9 +337,9 @@ while run:
 
             #text surface 
             choose_text = font.render(
-                "Choose outfit: A / B / C",       #display
+                "choose your garments: A / B / C",       #display
                 True,                             #smooth edges
-                (255,255,0)                       #colour CHANGE
+                ("#421A04")        #UPDATE               #colour CHANGE
             )
 
             enter_text = font.render(
@@ -390,20 +413,10 @@ while run:
             popup_y = (screen_h - popup_h) // 2
 
             overlay = py.Surface((popup_w, popup_h))
-            overlay.fill((40, 40, 40))
+            overlay.fill(("#E3C09A"))
 
-            py.draw.rect(
-                overlay,
-                (255,255,255),
-                (0,0,popup_w,popup_h),
-                3
-            )
-
-            text_surf = font.render(
-                active_message,
-                True,
-                (255,255,255)
-            )
+            py.draw.rect(overlay, ("#4D3318"), (0,0,popup_w,popup_h), 3 ) #UPDATE
+            text_surf = font.render(active_message, True, ("#472C10"))
 
             screen.blit(overlay, (popup_x, popup_y))
             screen.blit(text_surf, (popup_x + 20, popup_y + 45))
